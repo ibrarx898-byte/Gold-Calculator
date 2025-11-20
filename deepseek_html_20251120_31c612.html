@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>XAUUSD Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    background: #000000;
+    color: #FFFFFF;
+    font-family: Arial;
+    margin: 0;
+    padding: 10px;
+}
+.header {
+    background: #333333;
+    color: #FFD700;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid #FFD700;
+    margin-bottom: 10px;
+}
+.section {
+    background: #222222;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #444444;
+}
+.input-group {
+    margin: 10px 0;
+}
+label {
+    display: block;
+    color: #CCCCCC;
+    margin-bottom: 5px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    background: #111111;
+    color: #FFFFFF;
+    border: 1px solid #555555;
+    font-size: 16px;
+}
+.results {
+    background: #222222;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #444444;
+}
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+.calculate-btn {
+    width: 100%;
+    background: #FFD700;
+    color: #000000;
+    border: none;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">XAUUSD CALCULATOR</div>
+
+<div class="section">
+    <div class="input-group">
+        <label>Account Balance ($)</label>
+        <input type="number" id="balance" value="1000">
+    </div>
+    
+    <div class="input-group">
+        <label>Risk %</label>
+        <input type="number" id="risk" value="2" min="1" max="50">
+    </div>
+</div>
+
+<div class="section">
+    <div class="input-group">
+        <label>Lot Size</label>
+        <input type="number" id="lotSize" value="0.1" step="0.01">
+    </div>
+    
+    <div class="input-group">
+        <label>Stop Loss (Pips)</label>
+        <input type="number" id="stopLoss" value="30">
+    </div>
+</div>
+
+<div class="results">
+    <div class="result-row">
+        <span>Max Risk:</span>
+        <span id="maxRisk" style="color:#FFD700">$20.00</span>
+    </div>
+    <div class="result-row">
+        <span>Lot Size:</span>
+        <span id="resultLot" style="color:#FFD700">0.10</span>
+    </div>
+    <div class="result-row">
+        <span>Potential Loss:</span>
+        <span id="resultLoss" style="color:#FF4444">$30.00</span>
+    </div>
+</div>
+
+<button class="calculate-btn" onclick="calculate()">CALCULATE</button>
+
+<script>
+function calculate() {
+    var balance = parseFloat(document.getElementById('balance').value) || 0;
+    var risk = parseFloat(document.getElementById('risk').value) || 0;
+    var lotSize = parseFloat(document.getElementById('lotSize').value) || 0;
+    var stopLoss = parseFloat(document.getElementById('stopLoss').value) || 0;
+    
+    var maxRisk = balance * (risk / 100);
+    var pipValue = lotSize * 10;
+    var potentialLoss = pipValue * stopLoss;
+    
+    document.getElementById('maxRisk').textContent = '$' + maxRisk.toFixed(2);
+    document.getElementById('resultLot').textContent = lotSize.toFixed(2);
+    document.getElementById('resultLoss').textContent = '$' + potentialLoss.toFixed(2);
+}
+
+// Auto calculate when inputs change
+document.getElementById('balance').oninput = calculate;
+document.getElementById('risk').oninput = calculate;
+document.getElementById('lotSize').oninput = calculate;
+document.getElementById('stopLoss').oninput = calculate;
+
+// Initial calculation
+calculate();
+</script>
+
+</body>
+</html>
